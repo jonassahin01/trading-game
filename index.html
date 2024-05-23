@@ -1,162 +1,271 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Trading Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+  <title>Mindset Trading Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
 
+    .panel {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .table th, .table td {
+      vertical-align: middle;
+    }
+
+    .btn {
+      border-radius: 25px;
+    }
+
+    #chart-section-container {
+      margin-bottom: 20px;
+    }
+
+    #game-controls {
+      padding: 20px;
+    }
+
+    .navbar {
+      margin-bottom: 20px;
+      border-radius: 0;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff !important;
+    }
+
+    .navbar {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .navbar .navbar-brand {
+      color: #fff;
+    }
+
+    .input-group-addon {
+      border-radius: 0;
+    }
+
+    .input-group .form-control {
+      border-radius: 0;
+    }
+
+    .chart-buttons-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .chart-buttons-container button, .chart-buttons-container input[type="range"] {
+      margin: 0 5px;
+    }
+
+    .table-hover > tbody > tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    #loader-section {
+      padding: 50px;
+    }
+
+    #loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #007bff;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #loader-text {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="chart-section-container">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Mindset Trading Game</a>
+    </div>
+  </div>
+</nav>
 
-  <div id="loader-section" class="text-center">
+<div class="container" style="padding-top: 60px;">
+  <div id="chart-section-container">
+
+    <div id="loader-section" class="text-center">
       <div id="loader"></div>
       <p id="loader-text">Loading data...</p>
-  </div>		
+    </div>
 
-  <div class="chart-buttons-container" id="chart-buttons-container-left">
-    <button id="start-end-game" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-off"></i></button>
-    <button id="refresh-btn" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-refresh"></i></button>
-    <button id="show-hide-asset" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-eye-open"></i></button>  
-  </div>  
+    <div class="chart-buttons-container" id="chart-buttons-container-left">
+      <button id="start-end-game" class="btn btn-success btn-sm"><i class="fa fa-power-off"></i></button>
+      <button id="refresh-btn" class="btn btn-warning btn-sm"><i class="fa fa-refresh"></i></button>
+      <button id="show-hide-asset" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></button>
+    </div>
 
-  <div class="chart-buttons-container" id="chart-buttons-container-right">
-    <input id="data-speed-input" type="range" min="1" max="20" step="1" value="10" style="--val: 10;">
-    <button id="play-pause" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-play"></i></button>  
+    <div class="chart-buttons-container" id="chart-buttons-container-right">
+      <input id="data-speed-input" type="range" min="1" max="20" step="1" value="10" style="--val: 10;">
+      <button id="play-pause" class="btn btn-warning btn-sm"><i class="fa fa-play"></i></button>
+    </div>
+
+    <div id="container"></div>
+
   </div>
 
-  <div id="container"></div>  
+  <div id="game-controls" class="text-center">
+    <div class="row">
 
-</div>
-
-<div id="game-controls" class="text-center">
-  <div class="row">
-
-    <div id="main-game" class="col-xs-12 col-lg-6">
-      <div class="panel">
-        <div class="panel-body">
-         <div class="row">
-            <div class="col-xs-6 text-left">
-              <div class="input-group">
-                <span class="input-group-addon t-top t-sm" data-tooltip="Place your bet!">Amount:</span>
-                <input id="betting-amount" type="number" class="form-control" placeholder="..." value=1000 min="0" max="100000" step="1000">   
-                <span class="input-group-addon">$</span>
+      <div id="main-game" class="col-xs-12 col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-6 text-left">
+                <div class="input-group">
+                  <span class="input-group-addon t-top t-sm" data-tooltip="Place your bet!">Amount:</span>
+                  <input id="betting-amount" type="number" class="form-control" placeholder="..." value=1000 min="0" max="100000" step="1000">
+                  <span class="input-group-addon">$</span>
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon t-bottom t-xs" data-tooltip="Maturity (data points)">Expires in:</span>
+                  <input id="expiry" type="number" class="form-control" placeholder="..." value=10 min="1" max="100" step="1">
+                  <span class="input-group-addon">#</span>
+                </div>
               </div>
-              <div class="input-group">
-                <span class="input-group-addon t-bottom t-xs" data-tooltip="Maturity (data points)">Expires in:</span>
-                <input id="expiry" type="number" class="form-control" placeholder="..." value=10 min="1" max="100" step="1">  
-                <span class="input-group-addon">#</span>
-              </div>              
+              <div id="account-balance" class="col-xs-6 text-left">
+                <table class="table table-condensed">
+                  <tr>
+                    <th>Cash Balance:</th>
+                    <td class="text-left">$<span id="cash-balance">100,000</span></td>
+                  </tr>
+                  <tr>
+                    <th>Open Positions:</th>
+                    <td>$<span id="open-positions">0</span></td>
+                  </tr>
+                  <tr>
+                    <th>Equity:</th>
+                    <td>$<span id="equity">100,000</span></td>
+                  </tr>
+                </table>
+              </div>
             </div>
-            <div id="account-balance" class="col-xs-6 text-left">
-              <table class="table table-condensed">
-                <tr>
-                  <th>Cash Balance:</th>
-                  <td class="text-left">$<span id="cash-balance">100,000</span></td>
-                </tr>
-                <tr>
-                  <th>Open Positions:</th>
-                  <td>$<span id="open-positions">0</span></td>
-                </tr>
-                <tr>
-                  <th>Equity:</th>
-                  <td>$<span id="equity">100,000</span></td>
-                </tr>
-              </table>              
-            </div>           
-          </div>
 
-          <div class="row" id="buy-sell-buttons">
-            <div class="col-xs-6">          
-              <button id="buy" class="btn btn-success">Buy</button>
+            <div class="row" id="buy-sell-buttons">
+              <div class="col-xs-6">
+                <button id="buy" class="btn btn-success btn-block">Buy</button>
+              </div>
+              <div class="col-xs-6">
+                <button id="sell" class="btn btn-danger btn-block">Sell</button>
+              </div>
             </div>
-            <div class="col-xs-6">          
-              <button id="sell" class="btn btn-danger">Sell</button>
-            </div>            
           </div>
-        </div>   
-      </div>  
-    </div> <!--/ #main-game -->
-
-    <div id="game-history" class="col-xs-12 col-lg-6">
-      <div class="panel">
-        <div class="panel-body">
-          <table class="table table-bordered table-hover table-condensed">
-            <thead>
-              <tr>
-                <th>Order (#)</th>
-                <th>Time</th>
-                <th>Price ($)</th>
-                <th>Type</th>
-                <th>Amount ($)</th>
-                <th>Time</th>
-                <th>Price ($)</th>
-                <th>Profit ($)</th>   
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>  
-            </tbody>
-            <tfoot>
-              <tr class="active">
-                <td colspan="2">Win Rate: <span id="win-rate">0/0</span></td>
-                <td colspan="2">Avg. Profit: $<span id="average-profit">0</span></td>
-                <td colspan="2">Avg. Loss: $<span id="average-loss">0</span></td>
-                <td colspan="2">Profit: <span id="total-profit">$0</span></td>               
-              </tr>               
-            </tfoot>
-          </table>          
         </div>
-      </div>
-    </div> <!--/ #game-history -->
+      </div> <!--/ #main-game -->
 
+      <div id="game-history" class="col-xs-12 col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table table-bordered table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Order (#)</th>
+                  <th>Time</th>
+                  <th>Price ($)</th>
+                  <th>Type</th>
+                  <th>Amount ($)</th>
+                  <th>Time</th>
+                  <th>Price ($)</th>
+                  <th>Profit ($)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="active">
+                  <td colspan="2">Win Rate: <span id="win-rate">0/0</span></td>
+                  <td colspan="2">Avg. Profit: $<span id="average-profit">0</span></td>
+                  <td colspan="2">Avg. Loss: $<span id="average-loss">0</span></td>
+                  <td colspan="2">Profit: <span id="total-profit">$0</span></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div> <!--/ #game-history -->
+
+    </div>
   </div>
 </div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
-<script src='https://code.highcharts.com/stock/highstock.js'></script><script  src="./script.js"></script>
-
+<script src='https://code.highcharts.com/stock/highstock.js'></script>
+<script src="./script.js"></script>
 </body>
 </html>

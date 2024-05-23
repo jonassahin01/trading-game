@@ -1,374 +1,97 @@
 body {
-  height: 97vh;
-  width: 100vw;
-  overflow-x: hidden;
-  color: #ccc;
-  background-color: #333;
-}
-button, button:hover, button:active, button:focus, button:visited, .btn, .btn:hover, .btn:active, .btn:focus, .btn:visited {
-  text-decoration: none !important;
-  outline: none !important;
+  background-color: #f4f4f9;
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
-/* chart-section-container */
+.panel {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.btn {
+  border-radius: 25px;
+}
+
 #chart-section-container {
-  position: relative;
-  height: 70%;
-  min-height: 335px;
-  width: 95%;
-  margin: 5px auto;  
+  margin-bottom: 20px;
 }
-#loader-section {
-  padding: 40px 0 30px 0;
+
+#game-controls {
+  padding: 20px;
 }
-.chart-buttons-container {
-  position: absolute;
-  background-color: transparent;
-  display: none;
-  top: 0;
-  z-index: 1;
-}
-.chart-buttons-container button {
+
+.navbar {
+  margin-bottom: 20px;
   border-radius: 0;
-  font-size: 14px;
 }
-#chart-buttons-container-left { 
-  left: 0;  
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff !important;
 }
-#chart-buttons-container-right { 
-  right: 0;  
-}
-#data-speed-input {
-  position: absolute;
-  background-color: transparent;
-  width: 120px;
-  height: 20px;
-  top: 4px;
-  right: 60px;
-  --min: 1;
-  --max: 20;  
-  --px: 1px;
-  --range: calc(var(--max) - var(--min));
-  --ratio: calc((var(--val) - var(--min))/var(--range));
-  --sx: calc((var(--ratio)*120+10)*var(--px));  
-}
-#data-speed-input:focus { outline: none; }
-#data-speed-input, #data-speed-input::-webkit-slider-thumb { -webkit-appearance: none; }
-#data-speed-input::-webkit-slider-runnable-track {
-  box-sizing: border-box;
+
+.navbar {
+  background-color: #007bff;
   border: none;
-  width: 120px;
-  height: 5px;
-  background: #ccc;
 }
-#data-speed-input::-webkit-slider-runnable-track {
-  background: linear-gradient(#ccc, #ccc) var(--sx) 100% no-repeat #f0ad4e;
+
+.navbar .navbar-brand {
+  color: #fff;
 }
-#data-speed-input::-webkit-slider-thumb {
-  margin-top: -8px;
-  box-sizing: border-box;
-  border: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #f0ad4e;
+
+.input-group-addon {
+  border-radius: 0;
 }
+
+.input-group .form-control {
+  border-radius: 0;
+}
+
+.chart-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.chart-buttons-container button, .chart-buttons-container input[type="range"] {
+  margin: 0 5px;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+
+#loader-section {
+  padding: 50px;
+}
+
 #loader {
-  border: 30px solid #faf3d1;
-  border-top: 30px solid #f0ad4e;
+  border: 16px solid #f3f3f3;
   border-radius: 50%;
-  width: 250px;
-  height: 250px;
-  animation: spin 1.5s linear infinite;
-  margin: auto;
+  border-top: 16px solid #007bff;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
 #loader-text {
-  margin-top: 15px;
-	font-size: 26px;
-  color: #faf3d1;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #007bff;
 }
-#container {
-  width: 100%;
-  height: 100%;
-}
-
-/* game-controls */
-#game-controls {
-  width: 95%;
-  margin: 8px auto 0 auto;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-#game-controls .row .panel {
-  position: relative;
-  color: #333;  
-  height: 180px;
-}
-
-#main-game {
-  padding-right: 5px;
-}
-#main-game .input-group:first-child {
-  margin-bottom: 8px;
-}
-#main-game .input-group:first-child span.input-group-addon:first-child {
-  padding: 0 18px;
-}
-span.input-group-addon {
-  cursor: default; 
-  user-select: none;
-}
-#account-balance .table {
-  width: 75%;
-  margin: -6px auto 0 auto;
-}
-#account-balance .table > thead > tr > th, #account-balance .table > tbody > tr > th, #account-balance .table > thead > tr > td, #account-balance .table > tbody > tr > td {
-  border-top: 0;
-}
-#account-balance .table > thead > tr > th, #account-balance .table > tbody > tr > th {
-  font-weight: 400;
-}
-#account-balance .table tr:last-child {
-  border-top: 5px double #ddd;
-}
-#account-balance .table tr:last-child > th, #account-balance .table tr:last-child > td {
-  font-weight: 700;  
-}
-
-#game-history {
-  padding-left: 5px;
-}
-#game-history .panel {
-  border: 2px solid #ccc; 
-}
-#game-history .panel, #game-history .panel .panel-body {
-  width: 100%;
-  height: 100%; 
-  margin: 0;
-  padding: 0;   
-}
-#game-history table {
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-size: 12px;
-}
-#game-history table tbody {
-  display: block;
-  height: 112px;
-  overflow-y: scroll;
-}
-#game-history table tbody::-webkit-scrollbar { width: 2px; }
-#game-history table tbody::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
-#game-history table tbody::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.4); }
-#game-history table thead tr, #game-history table tbody tr, #game-history table tfoot tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-#game-history table thead tr, #game-history table tfoot tr {
-    width: calc( 100% - 2px ); /* remove scrollbar width */
-}
-#game-history table tr:first-child th { border-top: 0; }
-#game-history table tr td:first-child, #game-history table tr th:first-child { border-left: 0; }
-#game-history table tr td:last-child, #game-history table tr th:last-child { border-right: 0; }
-#game-history table.table > thead > tr > th { text-align: center; height: 30px; cursor: default; }
-#game-history table.table > tbody > tr > td { vertical-align: middle; position: relative; top: 1px; height: 27px; cursor: default; }
-#game-history table.table > tfoot > tr > td { 
-  border-top: 5px double #ccc;
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
-  font-weight: bold;  
-  height: 30px;
-  cursor: default;
-}
-
-#buy-sell-buttons {
-  margin-top: 18px;
-}
-#buy, #sell {
-  display: block;
-  width: 100%;
-  font-size: 20px;
-  padding: 8px;
-}
-
-/* Tooltip */
-[data-tooltip] {
-  position: relative;
-}
-[data-tooltip]:before, [data-tooltip]:after {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.15s cubic-bezier(0.5, 1, 0.25, 1);
-  z-index: 2;
-}
-[data-tooltip]:before {
-  padding: 5px;
-  width: 110px;
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  content: attr(data-tooltip);
-  text-align: center;
-  font-size: 12px;
-  font-weight: normal;
-  line-height: 1.2;
-  white-space: normal;  
-}
-[data-tooltip]:after {
-  border: 5px solid transparent;
-  width: 0;
-  content: "";
-  font-size: 0;
-  line-height: 0;
-}
-[data-tooltip]:hover:before, [data-tooltip]:hover:after {
-  visibility: visible;
-  opacity: 1;
-}
-[data-tooltip].t-xl:before { width: 200px; }
-[data-tooltip].t-lg:before { width: 170px; }
-[data-tooltip].t-md:before { width: 140px; }
-[data-tooltip].t-sm:before { width: 100px; }
-[data-tooltip].t-xs:before { width: 80px; }
-[data-tooltip].t-top:before {
-  bottom: 100%;
-  left: 50%;
-  margin-bottom: 5px;
-  transform: translateX(-50%);
-}
-[data-tooltip].t-top:after {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-top: 5px solid rgba(0, 0, 0, 0.9);
-  border-bottom: none;
-}
-[data-tooltip].t-top:hover:before, [data-tooltip].t-top:hover:after {
-  transform: translateX(-50%) translateY(-5px);
-}
-[data-tooltip].t-right:before {
-  top: 50%;
-  left: 100%;
-  margin-left: 5px;
-  transform: translateY(-50%);
-}
-[data-tooltip].t-right:after {
-  top: 50%;
-  left: 100%;
-  transform: translateY(-50%);
-  border-right: 5px solid rgba(0, 0, 0, 0.9);
-  border-left: none;
-}
-[data-tooltip].t-right:hover:before, [data-tooltip].t-right:hover:after {
-  transform: translateX(5px) translateY(-50%);
-}
-[data-tooltip].t-bottom:before {
-  top: 100%;
-  left: 50%;
-  margin-top: 5px;
-  transform: translateX(-50%);
-}
-[data-tooltip].t-bottom:after {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-bottom: 5px solid rgba(0, 0, 0, 0.9);
-  border-top: none;
-}
-[data-tooltip].t-bottom:hover:before, [data-tooltip].t-bottom:hover:after {
-  transform: translateX(-50%) translateY(5px);
-}
-[data-tooltip].t-left:before {
-  top: 50%;
-  right: 100%;
-  margin-right: 5px;
-  transform: translateY(-50%);
-}
-[data-tooltip].t-left:after {
-  top: 50%;
-  right: 100%;
-  transform: translateY(-50%);
-  border-left: 5px solid rgba(0, 0, 0, 0.9);
-  border-right: none;
-}
-[data-tooltip].t-left:hover:before, [data-tooltip].t-left:hover:after {
-  transform: translateX(-5px) translateY(-50%);
-}
-
-@media (max-width: 1200px) {
-  #main-game, #game-history {  padding-right: 10px; padding-left: 10px; }
-  #game-history { margin-top: -10px; margin-bottom: 0px; }
-}
-@media (min-height: 800px) {
-  #game-controls { margin: 20px auto; }
-  #main-game, #game-history { padding-right: 15px; padding-left: 15px; }
-  #chart-section-container { margin-top: 15px; }
-}
-@media (max-width: 768px) {
-  body { height: 100vh; } 
-  #chart-section-container { height: 50%; margin-bottom: 2px; }
-  #loader { width: 200px; height: 200px; }  
-  #loader-text { font-size: 22px; }
-  #data-speed-input { top: 3px; width: 90px; right: 40px; --sx: calc((var(--ratio)*90+9)*var(--px)); }
-  #data-speed-input::-webkit-slider-runnable-track { width: 90px; height: 4px; }
-  #data-speed-input::-webkit-slider-thumb { margin-top: -7px; width: 18px; height: 18px; }
-  .chart-buttons-container button.btn-sm { font-size: 12px; padding: 3px 8px; }
-  #refresh-btn, #show-hide-asset { margin-left: 5px; }
-  #game-controls { margin: 8px auto 0 auto; }
-  #game-controls .row .panel { height: 142px; }
-  #main-game, #game-history {  padding-right: 15px; padding-left: 15px; }
-  #main-game { font-size: 12px; }
-  #main-game .panel-body { padding: 9px 12px; }
-  #main-game .input-group { font-size: 10px; padding: 0; }
-  #main-game .input-group-addon { font-size: 8px; padding: 5px; }
-  #main-game .input-group:first-child span.input-group-addon:first-child { padding: 0 8px; }
-  #account-balance .table { width: 100%; margin: 0 auto; font-size: 10px; }
-  #account-balance .table tr:last-child { border-top: 3px double #ddd; }
-  #account-balance .table-condensed > thead > tr:last-child > th, #account-balance .table-condensed > tbody > tr:last-child > th, #account-balance.table-condensed > thead > tr:last-child > td, .table-condensed > tbody > tr:last-child > td { padding-top: 8px; }
-  #game-history table { font-size: 6px; }
-  #game-history table tbody { height: 96px; }
-  #game-history table.table > thead > tr > th { height: 23px; }
-  #game-history table.table > tbody > tr > td { height: 23px; }
-  #game-history table.table > tfoot > tr > td { height: 16px; }  
-  #game-history table.table.table-condensed > tbody > tr > td { padding: 5px 2px; }  
-  #game-history table.table.table-condensed > tfoot > tr > td { padding: 3px 2px 1px 2px; } 
-  #buy-sell-buttons { margin-top: 10px; }
-  #buy, #sell { font-size: 16px; padding: 5px; }  
-  [data-tooltip]:before { font-size: 10px; } 
-  [data-tooltip].t-sm:before { width: 76px; }
-  [data-tooltip].t-xs:before { width: 70px; }
-}
-
-/* Animations */
-.tada { animation: tada 1s both; }
-@keyframes tada {
-  from { transform: scale3d(1, 1, 1); }
-  10%, 20% { transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg); }
-  30%, 50%, 70%, 90% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg); }
-  40%, 60%, 80% { transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg); }
-  to { transform: scale3d(1, 1, 1); }
-}
-.bounceIn { animation: bounceIn 0.75s both; }
-@keyframes bounceIn {
-  from, 20%, 40%, 60%, 80%, to { animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000); }
-  0% { opacity: 0; transform: scale3d(.3, .3, .3); }
-  20% { transform: scale3d(1.1, 1.1, 1.1); }
-  40% { transform: scale3d(.9, .9, .9); }
-  60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
-  80% { transform: scale3d(.97, .97, .97); }
-  to { opacity: 1; transform: scale3d(1, 1, 1); }
-}
-
-/* Highcharts Configuration */
-.highcharts-candlestick-series .highcharts-point { fill: #ff3333; }
-.highcharts-candlestick-series .highcharts-point-up { fill: #33ff33; }
-.highcharts-title { opacity: 0; transition: opacity 0.2s; }
